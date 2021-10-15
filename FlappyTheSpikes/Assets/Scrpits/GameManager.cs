@@ -28,6 +28,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int scorePlayer;
     [SerializeField] public int valuePassWall;
 
+    public bool gamePaused;
+
+    private void Update()
+    {
+        if(gamePaused)
+            Time.timeScale = 0;
+        else
+            Time.timeScale = 1;
+    }
+
+    public void PauseGame()
+    {
+        gamePaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        gamePaused = false;
+    }
 
     public void IncreaseScore()
     {
