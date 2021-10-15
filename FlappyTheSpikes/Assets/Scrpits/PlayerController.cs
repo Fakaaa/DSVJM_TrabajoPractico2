@@ -5,26 +5,19 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] LayerMask wall;
-
-    Animator animator;
-
+    [HideInInspector] public Rigidbody rb;
+    [SerializeField] Animator waveEffect;
     Player player;
-    Rigidbody rb;
 
     float t;
     float timeToTap;
 
-    ObstaclesBehaviour obstacles;
-
     void Start()
     {
-        obstacles = FindObjectOfType<ObstaclesBehaviour>();
-
         t = 0;
         timeToTap = 0.4f;
+        waveEffect.gameObject.SetActive(false);
 
-        animator = GetComponent<Animator>();
         player = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
     }
@@ -45,6 +38,8 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
 
     public void MakeJump()
     {
+        waveEffect.gameObject.SetActive(true);
+        waveEffect.SetBool("Jump", true);
         Vector2 upDirection = new Vector2(0, player.jumpPower);
 
         Vector3.Normalize(upDirection);
@@ -54,29 +49,5 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         MakeJump();
-    }
-
-    public bool Contains(LayerMask mask, int layer)
-    {
-        return mask == (mask | (1 << layer));
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(Contains(wall, collision.gameObject.layer))
-        {
-            CameraShake shake = Camera.main.GetComponent<CameraShake>();
-            if (shake != null)
-                StartCoroutine(shake.Shake(0.1f, 0.2f));
-
-            animator.SetTrigger("Die");
-            obstacles.obstaclesActivated = false;
-            rb.isKinematic = true;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
     }
 }

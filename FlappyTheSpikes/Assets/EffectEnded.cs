@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
-public class Die : StateMachineBehaviour
+public class EffectEnded : StateMachineBehaviour
 {
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Destroy(animator.gameObject);
+        animator.SetBool("Jump", false);
+        animator.gameObject.SetActive(false);
     }
 }
