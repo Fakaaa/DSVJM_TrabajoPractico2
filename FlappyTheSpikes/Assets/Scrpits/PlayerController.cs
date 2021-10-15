@@ -15,8 +15,12 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
     float t;
     float timeToTap;
 
+    ObstaclesBehaviour obstacles;
+
     void Start()
     {
+        obstacles = FindObjectOfType<ObstaclesBehaviour>();
+
         t = 0;
         timeToTap = 0.6f;
 
@@ -61,8 +65,18 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
     {
         if(Contains(wall, collision.gameObject.layer))
         {
+            CameraShake shake = Camera.main.GetComponent<CameraShake>();
+            if (shake != null)
+                StartCoroutine(shake.Shake(0.1f, 0.2f));
+
             animator.SetTrigger("Die");
+            obstacles.obstaclesActivated = false;
             rb.isKinematic = true;
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

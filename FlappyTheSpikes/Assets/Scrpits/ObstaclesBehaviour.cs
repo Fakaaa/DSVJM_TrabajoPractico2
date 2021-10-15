@@ -12,16 +12,21 @@ public class ObstaclesBehaviour : MonoBehaviour
     float t;
 
     [SerializeField] int amountObstaclesPerTime;
+    public bool obstaclesActivated;
 
     List<WallParent> obstaclesMoving = new List<WallParent>();
 
     void Start()
     {
         t = 0;
+        obstaclesActivated = true;
     }
 
     void Update()
     {
+        if (!obstaclesActivated)
+            return;
+
         if (t < timeToActivateObstacle)
             t += Time.deltaTime;
         else
