@@ -31,36 +31,31 @@ public class ObstalcesPool : MonoBehaviour
 
     #endregion
 
-    public List<GameObject> obstaclesPrefabs;
+    [SerializeField] WallParent obstaclesPrefabs;
 
     public int poolSize;
 
-    Queue<GameObject> obstaclesPool = new Queue<GameObject>();
+    Queue<WallParent> obstaclesPool = new Queue<WallParent>();
+
+    public int minDistanceWallParts;
 
     public void GrowPool()
     {
-        int randVal = 0;
-
         for (int i = 0; i < poolSize; i++)
         {
-            if (obstaclesPrefabs[randVal] != null)
-            {
-                randVal = Random.Range(0, obstaclesPrefabs.Count);
-                var instanceToAdd = Instantiate(obstaclesPrefabs[randVal], transform.position, Quaternion.identity, transform);
-                instanceToAdd.transform.parent = transform;
-                AddToPool(instanceToAdd);
-            }
+            var instanceToAdd = Instantiate(obstaclesPrefabs, transform.position, Quaternion.identity, transform);
+            AddToPool(instanceToAdd);
         }
     }
 
-    public void AddToPool(GameObject instance)
+    public void AddToPool(WallParent instance)
     {
-        instance.SetActive(false);
+        instance.gameObject.SetActive(false);
         instance.transform.position = transform.position;
         obstaclesPool.Enqueue(instance);
     }
 
-    public GameObject GetObstacleFromPool()
+    public WallParent GetObstacleFromPool()
     {
         if (obstaclesPool.Count == 0)
             GrowPool();
@@ -68,7 +63,19 @@ public class ObstalcesPool : MonoBehaviour
         var instance = obstaclesPool.Dequeue();
 
         if (instance != null)
-            instance.SetActive(true);
+        {
+            Vector3 randomPositionWallTop = new Vector3(instance.transform.position.x,Random.Range(4f, 10f), instance.transform.position.z);
+    
+            if(instance.GetWall(WallParent.TypeWall.Top) != null)
+            {
+                instance.SetWallPosition(randomPositionWallTop, WallParent.TypeWall.Top);
+                instance.SetWallPosition(randomPositionWallTop - 
+                    new Vector3(0, minDistanceWallParts+instance.GetWall(WallParent.TypeWall.Top).localScale.y,0), 
+                    WallParent.TypeWall.Bot);
+            }
+
+            instance.gameObject.SetActive(true);
+        }
 
         return instance;
     }

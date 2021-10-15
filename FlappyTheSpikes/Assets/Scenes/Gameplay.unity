@@ -542,10 +542,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a916e8d3e18e74d962360b5a5d5395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstaclesPrefabs:
-  - {fileID: 5386528666187012833, guid: 743d4d441226ef64da3b63abeabcdafc, type: 3}
-  - {fileID: 4133646322523753975, guid: 85663cbba3c93ba408924487266f0516, type: 3}
+  obstaclesPrefabs: {fileID: 1783289260755104792, guid: 743d4d441226ef64da3b63abeabcdafc,
+    type: 3}
   poolSize: 15
+  minDistanceWallParts: 3
 --- !u!1 &1256273314
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,6 +810,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalSpeed: 0
-  jumpPower: 10
-  maxVelocityY: 7
+  jumpPower: 7
   amountMoney: 0

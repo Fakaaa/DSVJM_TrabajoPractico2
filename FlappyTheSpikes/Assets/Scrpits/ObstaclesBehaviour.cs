@@ -13,12 +13,10 @@ public class ObstaclesBehaviour : MonoBehaviour
 
     [SerializeField] int amountObstaclesPerTime;
 
-    List<GameObject> obstaclesMoving;
+    List<WallParent> obstaclesMoving = new List<WallParent>();
 
     void Start()
     {
-        obstaclesMoving = new List<GameObject>();
-
         t = 0;
     }
 
