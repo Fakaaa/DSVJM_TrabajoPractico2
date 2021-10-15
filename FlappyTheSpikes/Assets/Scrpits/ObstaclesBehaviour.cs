@@ -38,7 +38,7 @@ public class ObstaclesBehaviour : MonoBehaviour
             {
                 if(obstaclesMoving[i].transform.position != endPos.position)
                 {
-                    obstaclesMoving[i].transform.position = Vector3.MoveTowards(obstaclesMoving[i].transform.position, endPos.position, Time.fixedDeltaTime * speedObstacles);
+                    obstaclesMoving[i].transform.position = Vector3.MoveTowards(obstaclesMoving[i].transform.position, endPos.position, Time.deltaTime * speedObstacles);
                 }
                 else
                 {

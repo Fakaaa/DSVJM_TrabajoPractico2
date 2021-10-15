@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1783289259089822052}
   - component: {fileID: 1783289259089822055}
   - component: {fileID: 1783289259089822050}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 1783289259290232688}
   - component: {fileID: 1783289259290232691}
   - component: {fileID: 1783289259290232702}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1783289260755104795}
   - component: {fileID: 1783289260755104792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ObstacleType1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

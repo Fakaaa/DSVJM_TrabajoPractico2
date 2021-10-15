@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] LayerMask wall;
+
+    Animator animator;
+
     Player player;
     Rigidbody rb;
 
@@ -16,6 +20,7 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
         t = 0;
         timeToTap = 0.6f;
 
+        animator = GetComponent<Animator>();
         player = GetComponent<Player>();
         rb = GetComponent<Rigidbody>();
     }
@@ -45,5 +50,19 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         MakeJump();
+    }
+
+    public bool Contains(LayerMask mask, int layer)
+    {
+        return mask == (mask | (1 << layer));
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(Contains(wall, collision.gameObject.layer))
+        {
+            animator.SetTrigger("Die");
+            rb.isKinematic = true;
+        }
     }
 }
