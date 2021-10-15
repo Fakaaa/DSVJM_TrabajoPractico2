@@ -38,8 +38,9 @@ dependencies {
 
 task exportFL(type:Copy){
     dependsOn assemble
-    from('build/outputs/aar')
-    into('../../../../../Assets/Plugins/Android')
+    from('C:/Users/Facu/Desktop/DSVJM/TRABAJO PRACTICO 2/DSVJM_TrabajoPractico2/FlappyTheSpikes/FacuPlugins/facuPlugin/build/outputs/aar')
+    into('C:/Users/Facu/Desktop/DSVJM/TRABAJO PRACTICO 2/DSVJM_TrabajoPractico2/FlappyTheSpikes/Assets/Plugins/Android')
     include(project.name + '-release.arr')
+
     println(project.name + '-release.arr')
 }

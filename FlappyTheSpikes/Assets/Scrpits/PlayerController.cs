@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
         if (Input.GetKeyDown(KeyCode.Space))
             MakeJump();
 
+
+        if (Input.GetKeyDown(KeyCode.F))
+            FacuLoggerPlug.SendLog("UWU");
+
         if (rb.velocity.y < 0)
             rb.mass = 3;
     }
