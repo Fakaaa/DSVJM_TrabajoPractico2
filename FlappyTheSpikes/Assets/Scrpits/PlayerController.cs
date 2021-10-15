@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
         obstacles = FindObjectOfType<ObstaclesBehaviour>();
 
         t = 0;
-        timeToTap = 0.6f;
+        timeToTap = 0.4f;
 
         animator = GetComponent<Animator>();
         player = GetComponent<Player>();
