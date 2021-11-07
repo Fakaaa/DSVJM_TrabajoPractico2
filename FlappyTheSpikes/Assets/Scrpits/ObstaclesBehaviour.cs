@@ -53,4 +53,17 @@ public class ObstaclesBehaviour : MonoBehaviour
             }
         }
     }
+
+    public void ResetObstacles()
+    {
+        for (int i = 0; i < obstaclesMoving.Count; i++)
+        {
+            if (obstaclesMoving[i] != null)
+            {
+                ObstalcesPool.Instance.AddToPool(obstaclesMoving[i]);
+                obstaclesMoving.RemoveAt(i);
+            }
+        }
+        obstaclesActivated = true;
+    }
 }

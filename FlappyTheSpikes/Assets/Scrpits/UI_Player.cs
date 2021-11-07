@@ -1,9 +1,11 @@
-﻿using UnityEngine;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
 
 public class UI_Player : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI score;
+    [SerializeField] TextMeshProUGUI recordScorePause;
+    [SerializeField] TextMeshProUGUI recordScoreDefeat;
 
     void Start()
     {
@@ -15,8 +17,10 @@ public class UI_Player : MonoBehaviour
         TriggerScore.playerPassWall -= UpdateScore;
     }
 
-    public void UpdateScore(int amount)
+    public void UpdateScore(int score, int recordScore)
     {
-        score.text = amount.ToString();
+        recordScorePause.text = recordScore.ToString();
+        recordScoreDefeat.text = recordScore.ToString();
+        this.score.text = score.ToString();
     }
 }

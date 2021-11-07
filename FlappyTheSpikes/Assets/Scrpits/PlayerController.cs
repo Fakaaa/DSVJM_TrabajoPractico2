@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IPointerClickHandler
@@ -31,9 +29,6 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
             MakeJump();
             t = 0;
         }
-
-        if (Input.GetKeyDown(KeyCode.F))
-            FacuLoggerPlug.SendLog("UWU");
     }
 
     public void MakeJump()
@@ -48,6 +43,9 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (t < timeToTap)
+            return;
+
         MakeJump();
     }
 }

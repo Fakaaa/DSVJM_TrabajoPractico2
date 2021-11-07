@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,9 +28,27 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public int scorePlayer;
     [SerializeField] public int valuePassWall;
+    [SerializeField] public GameObject defeatScreen;
 
     public bool gamePaused;
+    Player player;
+    ObstaclesBehaviour obstacles;
 
+    public int recordScore;
+
+    private void Start()
+    {
+        player = FindObjectOfType<Player>();
+        obstacles = FindObjectOfType<ObstaclesBehaviour>();
+
+        player.playerDefeat += ActivateDefeat;
+
+        recordScore = PlayerPrefs.GetInt("RecordScore", 0);
+
+        TriggerScore.playerPassWall?.Invoke(scorePlayer,recordScore);
+
+        AudioManagerScript.AudioManager.Instance.Play("Gameplay");
+    }
     private void Update()
     {
         if(gamePaused)
@@ -37,7 +56,10 @@ public class GameManager : MonoBehaviour
         else
             Time.timeScale = 1;
     }
-
+    private void OnDestroy()
+    {
+        player.playerDefeat -= ActivateDefeat;
+    }
     public void PauseGame()
     {
         gamePaused = true;
@@ -51,5 +73,36 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore()
     {
         scorePlayer += valuePassWall;
+
+        if (scorePlayer > recordScore)
+            SaveNewRecordScore(scorePlayer);
+    }
+
+    public void SaveNewRecordScore(int val)
+    {
+        recordScore = val;
+        PlayerPrefs.SetInt("RecordScore", recordScore);
+        PlayerPrefs.Save();
+    }
+
+    public void ResetScore()
+    {
+        scorePlayer = 0;
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene("Gameplay");
+    }
+
+    public void ActivateDefeat()
+    {
+        if(!gamePaused)
+            defeatScreen.SetActive(true);
+        else
+        {
+            ResumeGame();
+            defeatScreen.SetActive(true);
+        }
     }
 }

@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animSpeed: 0.5
+  maxScaleReach: 1.2
 --- !u!1 &1783289259290232690
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animSpeed: 0.5
+  maxScaleReach: 1.2
 --- !u!1 &1783289260755104794
 GameObject:
   m_ObjectHideFlags: 0
