@@ -28,9 +28,23 @@ public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
         }
         StartCoroutine(AsyncLoad());
     }
-    private void ReloadGameplay()
+    private void ReloadGameplay(int secondsToWait)
     {
-        SceneManager.LoadScene("Gameplay");
+        IEnumerator WaitFewSecondsUtilLoadScene()
+        {
+            float t = 0;
+
+            while(t < secondsToWait)
+            {
+                t += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            SceneManager.LoadScene("Gameplay");
+            yield break;
+        }
+
+        StartCoroutine(WaitFewSecondsUtilLoadScene());
     }
     private void QuitApplication()
     {

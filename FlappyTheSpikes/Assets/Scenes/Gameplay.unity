@@ -723,24 +723,24 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 175280267}
-        m_MethodName: ResetGameplay
-        m_Mode: 1
+      - m_Target: {fileID: 613762724}
+        m_MethodName: ExcuteCloseAnimation
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 613762724}
-        m_MethodName: ExcuteCloseAnimation
-        m_Mode: 1
+      - m_Target: {fileID: 175280267}
+        m_MethodName: ResetGameplay
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2170,7 +2170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e24032669dd30541ac62ce557b7b35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeAnim: 1
+  typeAnim: 0
   parentHolder: {fileID: 1793270948}
 --- !u!1 &720549537
 GameObject:
@@ -7644,12 +7644,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 297478737}
         m_MethodName: ExcuteCloseAnimation
-        m_Mode: 1
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 0.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -7901,6 +7901,7 @@ GameObject:
   - component: {fileID: 1124897622}
   - component: {fileID: 1124897624}
   - component: {fileID: 1124897623}
+  - component: {fileID: 1124897625}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -7965,6 +7966,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124897621}
   m_CullTransparentMesh: 0
+--- !u!225 &1124897625
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124897621}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1163651064
 GameObject:
   m_ObjectHideFlags: 0
@@ -9634,6 +9647,7 @@ GameObject:
   - component: {fileID: 1793270949}
   - component: {fileID: 1793270951}
   - component: {fileID: 1793270950}
+  - component: {fileID: 1793270952}
   m_Layer: 5
   m_Name: Defeat
   m_TagString: Untagged
@@ -9698,6 +9712,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793270948}
   m_CullTransparentMesh: 0
+--- !u!225 &1793270952
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793270948}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1826833845
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class GManagerReference : MonoBehaviour
             return reference;
         }
     }
-    [SerializeField] public OpenAnimation defeatScreen;
+    [SerializeField] public PanelAnimations defeatScreen;
     [HideInInspector] public Player player;
     public bool GmRefInitialized
     {
@@ -53,9 +53,9 @@ public class GManagerReference : MonoBehaviour
         ReferenceGM.ResumeGame();
     }
 
-    public void ResetGameplay()
+    public void ResetGameplay(int seconds)
     {
-        ReferenceGM.ResetGame();
+        ReferenceGM.ResetGame(seconds);
     }
 
     public void QuitMainMenu()

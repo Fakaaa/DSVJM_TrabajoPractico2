@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public int recordScore;
 
     #region PUBLIC ACTIONS
-    public UnityAction OnResetGameplay;
+    public UnityAction<int> OnResetGameplay;
     public UnityAction OnQuitGame;
     public UnityAction<string> OnGoMainMenu;
     #endregion
@@ -94,18 +94,19 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         PlayerPrefs.Save();
     }
 
-    public void ResetScore()
+    public void ResetScore(int value)
     {
-        scorePlayer = 0;
+        value = 0;
+        scorePlayer = value;
     }
 
     public void BackToMainMenu()
     {
         OnGoMainMenu?.Invoke("MainMenu");
     }
-    public void ResetGame()
+    public void ResetGame(int secondsToWait)
     {
-        OnResetGameplay?.Invoke();
+        OnResetGameplay?.Invoke(secondsToWait);
     }
 
     public void QuitGame()

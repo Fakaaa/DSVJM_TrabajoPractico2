@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class OpenAnimation : MonoBehaviour
+public class PanelAnimations : MonoBehaviour
 {
     [System.Serializable]
     public enum AnimationType
@@ -18,11 +17,16 @@ public class OpenAnimation : MonoBehaviour
     #endregion
 
     #region PRIVATE VALUES
+    CanvasGroup canvasGrp;
     Animator animator;
     #endregion
 
     void Start()
     {
+        canvasGrp = parentHolder.GetComponent<CanvasGroup>();
+        canvasGrp.alpha = 0;
+        canvasGrp.interactable = false;
+
         IEnumerator WaitUntilAnimatorRefFinded()
         {
             bool okAnimator = false;
@@ -31,33 +35,18 @@ public class OpenAnimation : MonoBehaviour
                 okAnimator = TryGetComponent<Animator>(out animator);
                 yield return new WaitForEndOfFrame();
             }
-            ExcuteCloseAnimation();
+            ExcuteCloseAnimation(0);
             yield break;
         }
         StartCoroutine(WaitUntilAnimatorRefFinded());
     }
 
-    void FixedUpdate()
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0))
-        {
-            if(animator.GetBool("InteedClose") && !animator.GetBool("InteedOpen"))
-            {
-                if(parentHolder.activeSelf)
-                    parentHolder.SetActive(false);
-            }
-            else if(!animator.GetBool("InteedClose") && animator.GetBool("InteedOpen"))
-            {
-                if(!parentHolder.activeSelf)
-                    parentHolder.SetActive(true);
-            }
-        }
-    }
-
     public void ExcuteOpenAnimation()
     {
         if (!parentHolder.activeSelf)
-            parentHolder.SetActive(true);
+        {
+            parentHolder.SetActive(true);            
+        }
 
         animator.SetBool("InteedClose", false);
         animator.SetBool("InteedOpen", true);
@@ -74,9 +63,18 @@ public class OpenAnimation : MonoBehaviour
                 animator.SetFloat("Opens", 3f);
                 break;
         }
+
+        IEnumerator WaitSecondsToAlpha()
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+            canvasGrp.alpha = 1;
+            canvasGrp.interactable = true;
+            yield break;
+        }
+        StartCoroutine(WaitSecondsToAlpha());
     }
 
-    public void ExcuteCloseAnimation()
+    public void ExcuteCloseAnimation(float secondsUntilReset)
     {
         animator.SetBool("InteedOpen", false);
         animator.SetBool("InteedClose", true);
@@ -93,5 +91,20 @@ public class OpenAnimation : MonoBehaviour
                 animator.SetFloat("Closes", 3f);
                 break;
         }
+
+        StartCoroutine(WaitUnitilAnimationEnds(secondsUntilReset));
+    }
+
+    IEnumerator WaitUnitilAnimationEnds(float secondsToWait)
+    {
+        yield return new WaitForSeconds(secondsToWait);
+
+        if (animator.GetBool("InteedClose") && !animator.GetBool("InteedOpen"))
+        {
+            if (parentHolder.activeSelf)
+                parentHolder.SetActive(false);
+        }
+
+        yield break;
     }
 }
