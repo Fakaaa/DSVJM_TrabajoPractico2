@@ -60,6 +60,28 @@ namespace AudioManagerScript
             }
         }
 
+        public void Pause(string name)
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+
+            if (s != null)
+            {
+                if (s.source.isPlaying)
+                    s.source.Pause();
+            }
+        }
+
+        public void Resume(string name)
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+
+            if (s != null)
+            {
+                if (!s.source.isPlaying)
+                    s.source.UnPause();
+            }
+        }
+
         public void StopAllSFX()
         {
             foreach (Sound s in sounds)
