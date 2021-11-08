@@ -8,8 +8,8 @@ public class PanelAnimations : MonoBehaviour
     public enum AnimationType
     {
         ScaleApear,
-        FromLeft,
-        FromRight
+        FromHorizontalSide,
+        FromVertical
     }
     #region EXPOSED VALUES
     [SerializeField] AnimationType typeAnim;
@@ -56,10 +56,10 @@ public class PanelAnimations : MonoBehaviour
             case AnimationType.ScaleApear:
                 animator.SetFloat("Opens", 1f);
                 break;
-            case AnimationType.FromLeft:
+            case AnimationType.FromHorizontalSide:
                 animator.SetFloat("Opens", 2f);
                 break;
-            case AnimationType.FromRight:
+            case AnimationType.FromVertical:
                 animator.SetFloat("Opens", 3f);
                 break;
         }
@@ -84,10 +84,10 @@ public class PanelAnimations : MonoBehaviour
             case AnimationType.ScaleApear:
                 animator.SetFloat("Closes", 1f);
                 break;
-            case AnimationType.FromLeft:
+            case AnimationType.FromHorizontalSide:
                 animator.SetFloat("Closes", 2f);
                 break;
-            case AnimationType.FromRight:
+            case AnimationType.FromVertical:
                 animator.SetFloat("Closes", 3f);
                 break;
         }
@@ -97,12 +97,16 @@ public class PanelAnimations : MonoBehaviour
 
     IEnumerator WaitUnitilAnimationEnds(float secondsToWait)
     {
-        yield return new WaitForSeconds(secondsToWait);
+        yield return new WaitForSecondsRealtime(secondsToWait);
 
         if (animator.GetBool("InteedClose") && !animator.GetBool("InteedOpen"))
         {
             if (parentHolder.activeSelf)
+            {
                 parentHolder.SetActive(false);
+                canvasGrp.alpha = 0;
+                canvasGrp.interactable = false;
+            }
         }
 
         yield break;
