@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public UnityAction<string> OnGoMainMenu;
     #endregion
 
-    ObstaclesBehaviour obstacles;
     GManagerReference gmReference;
     AudioManagerScript.AudioManager audioManagerRef;
 
@@ -57,9 +56,6 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         if (gmReference == null)
             gmReference = FindObjectOfType<GManagerReference>();
-
-        if (obstacles == null)
-            obstacles = FindObjectOfType<ObstaclesBehaviour>();
         
         if(gmReference != null && !gmReference.GmRefInitialized)
         {
@@ -102,6 +98,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     public void BackToMainMenu()
     {
+        ResumeGame();
         OnGoMainMenu?.Invoke("MainMenu");
     }
     public void ResetGame(int secondsToWait)

@@ -32,6 +32,9 @@ public class GManagerReference : MonoBehaviour
 
     private void OnDisable()
     {
+        if (player == null)
+            return;
+
         player.playerDefeat -= ActivateDefeat;
     }
 
@@ -40,7 +43,8 @@ public class GManagerReference : MonoBehaviour
         if (player == null)
             player = FindObjectOfType<Player>();
 
-        player.playerDefeat += ActivateDefeat;
+        if(player != null)
+            player.playerDefeat += ActivateDefeat;
     }
 
     public void PauseGame()
@@ -70,6 +74,9 @@ public class GManagerReference : MonoBehaviour
 
     public void ActivateDefeat()
     {
+        if (defeatScreen == null)
+            return;
+
         if (!ReferenceGM.gamePaused)
             defeatScreen.ExcuteOpenAnimation();
         else
