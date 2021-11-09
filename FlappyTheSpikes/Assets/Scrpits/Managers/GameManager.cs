@@ -8,8 +8,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 {
     [SerializeField] public int scorePlayer;
     [SerializeField] public int valuePassWall;
+    [SerializeField] public Color colorPlayerSelected;
     public bool gamePaused;
     public int recordScore;
+
 
     #region PUBLIC ACTIONS
     public UnityAction<int> OnResetGameplay;
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void BackToMainMenu()
     {
         ResumeGame();
+        ResetScore(0);
         OnGoMainMenu?.Invoke("MainMenu");
     }
     public void ResetGame(int secondsToWait)

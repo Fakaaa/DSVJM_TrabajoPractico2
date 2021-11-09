@@ -11,8 +11,17 @@ public class GManagerReference : MonoBehaviour
             return reference;
         }
     }
+    #region EXPOSED_FIELDS
     [SerializeField] public PanelAnimations defeatScreen;
+    [SerializeField] public GameObject uiShop;
+    [SerializeField] public CameraLerper lerperCamera;
+    public UnityAction OnGoShopMainMenu;
+    public UnityAction OnExitShopMainMenu;
+    #endregion
+
+    #region PRIVATE_FIELDS
     [HideInInspector] public Player player;
+    #endregion
     public bool GmRefInitialized
     {
         get; set;
@@ -22,6 +31,10 @@ public class GManagerReference : MonoBehaviour
     {
         reference = gameManager;
         GmRefInitialized = true;
+
+        if(lerperCamera != null)
+            lerperCamera.OnLerpTargetEnded = ActivateShop;
+
         LocalizePlayer();
     }
 
@@ -70,6 +83,27 @@ public class GManagerReference : MonoBehaviour
     public void QuitGame()
     {
         ReferenceGM.QuitGame();
+    }
+
+    public void GoShopMainMenu()
+    {
+        OnGoShopMainMenu?.Invoke();
+    }
+
+    public void ExitShopMainMenu()
+    {
+        DisableShop();
+        OnExitShopMainMenu?.Invoke();
+    }
+
+    private void ActivateShop()
+    {
+        uiShop.SetActive(true);
+    }
+
+    private void DisableShop()
+    {
+        uiShop.SetActive(false);
     }
 
     public void ActivateDefeat()
