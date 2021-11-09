@@ -6,12 +6,14 @@ using MonoBehaviourSingletonScript;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
+    #region EXPOSED_FIELDS
     [SerializeField] public int scorePlayer;
     [SerializeField] public int valuePassWall;
-    [SerializeField] public Color colorPlayerSelected;
+    [SerializeField] public int currencyPlayer;
+    [SerializeField] public ItemShop colorPlayerSelected;
     public bool gamePaused;
     public int recordScore;
-
+    #endregion
 
     #region PUBLIC ACTIONS
     public UnityAction<int> OnResetGameplay;
@@ -19,8 +21,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public UnityAction<string> OnGoMainMenu;
     #endregion
 
+    #region PRIVATE_FIELDS
+    public Dictionary<int,ItemShop> itemsBought = new Dictionary<int, ItemShop>();
     GManagerReference gmReference;
     AudioManagerScript.AudioManager audioManagerRef;
+    #endregion
 
     private void Start()
     {
@@ -45,6 +50,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         TriggerScore.playerPassWall?.Invoke(scorePlayer, recordScore);
     }
 
+    private void OnDisable()
+    {
+        SaveBoughtItems();
+    }
+
     private void Update()
     {
         InitializeEsentials();
@@ -54,6 +64,18 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         else
             Time.timeScale = 1;
     }
+
+    public void SaveBoughtItems()
+    {
+        //Implementar guardado de items comprados
+    }
+
+    public void SaveItemPlayer(int id, ItemShop newItemBought)
+    {
+        itemsBought[id] = newItemBought;
+        Debug.Log("Item comprado y almacenado!");
+    }
+
     private void InitializeEsentials()
     {
         if (gmReference == null)

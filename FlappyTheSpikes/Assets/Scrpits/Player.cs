@@ -40,7 +40,11 @@ public class Player : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         animator = GetComponent<Animator>();
 
-        playerColor = GameManager.Instance.colorPlayerSelected;
+        if(GameManager.Instance.colorPlayerSelected != null)
+            playerColor = GameManager.Instance.colorPlayerSelected.hisColor;
+        else
+            playerColor = Color.blue;   //Default color
+
 
         colorLerping = false;
 
