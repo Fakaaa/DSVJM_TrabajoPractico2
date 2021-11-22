@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class ItemShop : MonoBehaviour
 {
     #region EXPOSED_FIELDS
@@ -8,4 +9,12 @@ public class ItemShop : MonoBehaviour
     public bool alreadyBought;
     public bool selected;
     #endregion
+
+    public ItemShop(ItemShop item)
+    {
+        hisColor = item.hisColor;
+        costToGet = item.costToGet;
+        alreadyBought = item.alreadyBought;
+        selected = item.selected;
+    }
 }

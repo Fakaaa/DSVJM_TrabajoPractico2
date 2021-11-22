@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopManager : MonoBehaviour
 {
     #region EXPOSED_FIELDS
-    [SerializeField] private List<ItemShop> itemsAviable;
+    [SerializeField] private List<ItemShop> existenItems;
     [SerializeField] private Shop shopCanvas;
     #endregion
 
@@ -37,14 +37,14 @@ public class ShopManager : MonoBehaviour
             }
             for (int i = 0; i < indicesUnbuyedItems.Count; i++)
             {
-                shopCanvas.SaveColorAviableOnDic(indicesUnbuyedItems[i], itemsAviable[indicesUnbuyedItems[i]]);
+                shopCanvas.SaveColorAviableOnDic(indicesUnbuyedItems[i], existenItems[indicesUnbuyedItems[i]]);
             }
         }
         else
         {
-            for (int i = 0; i < itemsAviable.Count; i++)
+            for (int i = 0; i < existenItems.Count; i++)
             {
-                shopCanvas.SaveColorAviableOnDic(i, itemsAviable[i]);
+                shopCanvas.SaveColorAviableOnDic(i, existenItems[i]);
             }
         }
 
@@ -59,9 +59,9 @@ public class ShopManager : MonoBehaviour
 
         foreach (int idItem in gmReference.itemsBought.Keys)
         {
-            for (int j = 0; j < itemsAviable.Count; j++)
+            for (int j = 0; j < existenItems.Count; j++)
             {
-                if(gmReference.itemsBought[idItem] != itemsAviable[j])
+                if(gmReference.itemsBought[idItem].name != existenItems[j].name)
                 {
                     indicesUnbuyedItems.Add(j);
                 }
