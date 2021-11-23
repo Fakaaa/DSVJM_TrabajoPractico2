@@ -48,7 +48,7 @@ public class UI_PopTexts : MonoBehaviour
 
                 alphaGroup.alpha += Mathf.Clamp(Time.deltaTime * 2,0,1);
 
-                text.gameObject.transform.position = Vector3.MoveTowards(text.gameObject.transform.position, targetPosition.position, speed * Time.deltaTime);
+                text.gameObject.transform.localPosition = Vector3.MoveTowards(text.gameObject.transform.localPosition, targetPosition.localPosition, speed * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
 
@@ -60,7 +60,7 @@ public class UI_PopTexts : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             alphaGroup.alpha = 0;
-            text.gameObject.transform.position = startPosition.position;
+            text.gameObject.transform.localPosition = startPosition.localPosition;
 
             yield break;
         }
