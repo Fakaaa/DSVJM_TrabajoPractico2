@@ -15,12 +15,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField, Tooltip("The first on array will always be easy mode, while the last one hard mode")]
     public int [] dificultyBehaviour;
     public bool gamePaused;
+    public bool dontPersistShop;
 
     [Header("SAVE&LOAD INFORMATION")]
     [Space(15)]
     public int recordScore;
     public int colorsSaved;
-    public ItemShop [] itemsSaved = new ItemShop [5];
+    public ItemsBoughtData itemsSaved;
     public Dictionary<int,ItemShop> itemsBought = new Dictionary<int, ItemShop>();
     #endregion
 
@@ -73,12 +74,19 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         TriggerScore.playerPassWall?.Invoke(scorePlayer, recordScore);
 
-        //LoadSavedItems();
+        LoadSavedItems();
     }
 
     private void OnDisable()
     {
-        //SaveBoughtItems();
+        if(!dontPersistShop)
+        {
+            SaveBoughtItems();
+        }
+        else
+        {
+            SaveSystem.ResetItemsData();    //Limpia el archivo data de items con una lista vacia
+        }
     }
 
     private void Update()
@@ -131,32 +139,38 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         
         if (itemsSaved == null)
         {
-            itemsSaved = new ItemShop[5];
             return;
         }
 
-        colorsSaved = itemsSaved.Length;
+        colorsSaved = itemsSaved.items.Length;
 
-        if (itemsSaved.Length > 0)
+        if (itemsSaved.items.Length > 0)
         {
-            Debug.Log("Hay "+ itemsSaved.Length + " items comprados que fueron cargados");
+            Debug.Log("Hay "+ itemsSaved.items.Length + " items comprados que fueron cargados");
+
+            if(itemsBought != null)
+            {
+                for (int i = 0; i < itemsSaved.items.Length ; i++)
+                {
+                    itemsBought[i] = itemsSaved.items[i];
+                }
+            }
         }
     }
 
     public void SaveBoughtItems()
     {
+        List<ItemShop> allItemsBought = new List<ItemShop>();
+
         foreach(ItemShop item in itemsBought.Values)
         {
-            for (int i = 0; i < itemsSaved.Length; i++)
-            {
-                itemsSaved[i] = item;
-            }
+            allItemsBought.Add(item);
         }
-        Debug.Log("Se intentaran guardar " + itemsSaved.Length + " comprados");
+        Debug.Log("Se intentaran guardar " + allItemsBought.Count + " comprados");
 
-        if (itemsSaved.Length >= 1)
+        if (allItemsBought.Count >= 1)
         {
-            SaveSystem.SaveItems(itemsSaved);
+            SaveSystem.SaveItems(allItemsBought);
             Debug.Log("Todo guardado!");
         }
     }
@@ -194,7 +208,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         IEnumerator Delay()
         {
             initialPlatformActive = false;
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             initialPlatform.SetActive(false);
             yield break;
         }

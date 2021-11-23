@@ -48,6 +48,8 @@ public class ShopManager : MonoBehaviour
             }
         }
 
+        shopCanvas.UpdateShop();
+
         indicesUnbuyedItems.Clear();
         indicesBuyedItems.Clear();
     }
@@ -67,6 +69,7 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
+                    existenItems[j].alreadyBought = true;
                     indicesBuyedItems.Add(idItem);
                 }
             }

@@ -105,7 +105,9 @@ public class Shop : MonoBehaviour
                 buyItem.gameObject.SetActive(true);
             }
 
-            currencyPlayer.text = "$" + gmRef.currencyPlayer;
+            if(gmRef != null)
+                currencyPlayer.text = "$" + gmRef.currencyPlayer;
+
             showCurrencyNeded.text = "$" + GetColorFromDic(actualID).costToGet;
             actualColorDisplay.text = GetColorFromDic(actualID).name;
 

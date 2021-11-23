@@ -7,18 +7,13 @@ public static class SaveSystem
 {
     public static int maxItemShopElementsToLoad = 15;
 
-    public static void SaveItems(ItemShop [] item)
+    public static void SaveItems(List<ItemShop> items)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/items.dat";
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        ItemShop[]theListToSave = new ItemShop[item.Length];
-
-        for (int i = 0; i < item.Length; i++)
-        {
-            theListToSave[i] = item[i];
-        }
+        ItemsBoughtData theListToSave = new ItemsBoughtData(items);
 
         formatter.Serialize(stream, theListToSave);
         stream.Seek(0, SeekOrigin.Begin);
@@ -26,19 +21,19 @@ public static class SaveSystem
         stream.Close();
     }
    
-    public static ItemShop[] LoadItems()
+    public static ItemsBoughtData LoadItems()
     {
         string path = Application.persistentDataPath + "/items.dat";
 
         if(File.Exists(path))
         {
-            ItemShop[] loadedListOfItems = null;
+            ItemsBoughtData loadedListOfItems = null;
 
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             stream.Seek(0,SeekOrigin.Begin);
 
-            loadedListOfItems = (ItemShop[])formatter.Deserialize(stream);
+            loadedListOfItems = (ItemsBoughtData)formatter.Deserialize(stream);
             stream.Close();
 
             return loadedListOfItems;
@@ -48,5 +43,21 @@ public static class SaveSystem
             Debug.LogError("File not found at " + path);
             return null;
         }
+    }
+
+    public static void ResetItemsData()
+    {
+        string path = Application.persistentDataPath + "/items.dat";
+
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        List<ItemShop> emptyList = new List<ItemShop>();
+        ItemsBoughtData theListToSave = new ItemsBoughtData(emptyList);
+
+        formatter.Serialize(stream, theListToSave);
+        stream.Seek(0, SeekOrigin.Begin);
+
+        stream.Close();
     }
 }
