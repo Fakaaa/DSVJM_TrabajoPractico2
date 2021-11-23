@@ -10,6 +10,7 @@ public class Shop : MonoBehaviour
     #region EXPOSED_FIELDS
     [SerializeField] public TextMeshProUGUI actualColorDisplay;
     [SerializeField] public TextMeshProUGUI showCurrencyNeded;
+    [SerializeField] public TextMeshProUGUI currencyPlayer;
     [SerializeField] public Button buyItem;
     [SerializeField] public Button chooseItem;
     [SerializeField] public PlayerColorPreview previewColor;
@@ -104,6 +105,7 @@ public class Shop : MonoBehaviour
                 buyItem.gameObject.SetActive(true);
             }
 
+            currencyPlayer.text = "$" + gmRef.currencyPlayer;
             showCurrencyNeded.text = "$" + GetColorFromDic(actualID).costToGet;
             actualColorDisplay.text = GetColorFromDic(actualID).name;
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2497641219233377945}
   - component: {fileID: 2497641219233377946}
   m_Layer: 0
-  m_Name: Yellow
+  m_Name: Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3834abd35fe56e41a3602cc6aacbbe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hisColor: {r: 1, g: 0.9114799, b: 0, a: 1}
-  costToGet: 300
+  hisColor: {r: 0, g: 0, b: 0, a: 1}
+  costToGet: 1000
   alreadyBought: 0
   selected: 0

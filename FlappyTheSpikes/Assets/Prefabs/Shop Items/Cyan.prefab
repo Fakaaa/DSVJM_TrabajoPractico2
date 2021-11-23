@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hisColor: {r: 0, g: 0.9612417, b: 1, a: 1}
-  costToGet: 50
+  costToGet: 150
   alreadyBought: 0
   selected: 0

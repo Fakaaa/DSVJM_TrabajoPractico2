@@ -29,11 +29,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public UnityAction OnQuitGame;
     public UnityAction<string> OnGoMainMenu;
     public UnityAction OnChangeDificulty;
+    public UnityAction<TMPro.TextMeshProUGUI, float, float> OnGainPoints;
     #endregion
 
     #region PRIVATE_FIELDS
     GManagerReference gmReference;
     GameObject initialPlatform;
+    UI_PopTexts uiPOPTexts;
     bool initialPlatformActive = true;
     AudioManagerScript.AudioManager audioManagerRef;
     public enum Dificulty
@@ -173,6 +175,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         if (initialPlatform == null)
             initialPlatform = GameObject.FindGameObjectWithTag("InitialPlatform");
 
+        if (uiPOPTexts == null)
+            uiPOPTexts = FindObjectOfType<UI_PopTexts>();
+
         if (gmReference != null && !gmReference.GmRefInitialized)
         {
             gmReference.InitGMReference(this);
@@ -183,7 +188,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     public void DeactivateInitialPlatform()
     {
-        if (!initialPlatformActive)
+        if (!initialPlatformActive || initialPlatform == null)
             return;
 
         IEnumerator Delay()
@@ -208,6 +213,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         audioManagerRef.Resume("Gameplay");
     }
 
+    public void IncreaseCurrency(int currencyGived)
+    {
+        currencyPlayer += currencyGived;
+    }
+
     public void IncreaseScore()
     {
         scorePlayer += valuePassWall;
@@ -216,6 +226,12 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         if (scorePlayer > recordScore)
             SaveNewRecordScore(scorePlayer);
+
+        if (uiPOPTexts == null)
+            return;
+
+        if(uiPOPTexts != null)
+            OnGainPoints?.Invoke(uiPOPTexts.scoreGived, 180f, .25f);
     }
 
     public void SaveNewRecordScore(int val)
@@ -242,6 +258,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         actualDificulty = Dificulty.Easy;
         lastDificulty = actualDificulty;
         OnResetGameplay?.Invoke(secondsToWait);
+
+        uiPOPTexts = null;
         initialPlatform.SetActive(true);
         initialPlatformActive = true;
     }
