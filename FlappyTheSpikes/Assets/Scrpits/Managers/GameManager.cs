@@ -198,7 +198,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             initialPlatform.SetActive(false);
             yield break;
         }
-        StartCoroutine(Delay());
+        if(initialPlatform != null)
+            StartCoroutine(Delay());
     }
 
     public void PauseGame()
@@ -252,6 +253,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         ResumeGame();
         ResetScore(0);
         OnGoMainMenu?.Invoke("MainMenu");
+        initialPlatform = null;
+        initialPlatformActive = true;
     }
     public void ResetGame(int secondsToWait)
     {
