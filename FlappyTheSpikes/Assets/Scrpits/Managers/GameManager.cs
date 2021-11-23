@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField, Tooltip("The first on array will always be easy mode, while the last one hard mode")]
     public int [] dificultyBehaviour;
     public bool gamePaused;
-    public bool dontPersistShop;
+    [Tooltip("Enable this on executemode to clear the saved items on quit.")]
+    public bool clearItemsBuyed;
 
     [Header("SAVE&LOAD INFORMATION")]
     [Space(15)]
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public UnityAction OnQuitGame;
     public UnityAction<string> OnGoMainMenu;
     public UnityAction OnChangeDificulty;
+    public UnityAction<int> OnGiveCurrencyToPlayer;
     public UnityAction<TMPro.TextMeshProUGUI, float, float> OnGainPoints;
     #endregion
 
@@ -74,12 +76,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         TriggerScore.playerPassWall?.Invoke(scorePlayer, recordScore);
 
+        currencyPlayer = PlayerPrefs.GetInt("CurrencyPlayer", 0);
+
         LoadSavedItems();
     }
 
     private void OnDisable()
     {
-        if(!dontPersistShop)
+        SaveActualCurrency();
+
+        if (!clearItemsBuyed)
         {
             SaveBoughtItems();
         }
@@ -124,7 +130,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             lastDificulty = actualDificulty;
             OnChangeDificulty?.Invoke();
-            Debug.Log("Dificulty has increased!");
+
+            IncreaseCurrency(200);
+            OnGiveCurrencyToPlayer?.Invoke(currencyPlayer);
         }
     }
 
@@ -146,13 +154,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         if (itemsSaved.items.Length > 0)
         {
-            Debug.Log("Hay "+ itemsSaved.items.Length + " items comprados que fueron cargados");
-
             if(itemsBought != null)
             {
                 for (int i = 0; i < itemsSaved.items.Length ; i++)
                 {
-                    itemsBought[i] = itemsSaved.items[i];
+                    itemsBought[itemsSaved.items[i].idInShop] = itemsSaved.items[i];
                 }
             }
         }
@@ -166,19 +172,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             allItemsBought.Add(item);
         }
-        Debug.Log("Se intentaran guardar " + allItemsBought.Count + " comprados");
 
         if (allItemsBought.Count >= 1)
         {
             SaveSystem.SaveItems(allItemsBought);
-            Debug.Log("Todo guardado!");
         }
     }
 
     public void SaveItemPlayer(int id, ItemShop newItemBought)
     {
         itemsBought[id] = newItemBought;
-        Debug.Log("Item comprado y almacenado!");
     }
 
     private void InitializeEsentials()
@@ -197,6 +200,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
             gmReference.InitGMReference(this);
             TriggerScore.playerPassWall?.Invoke(scorePlayer, recordScore);
             OnChangeDificulty?.Invoke();
+            OnGiveCurrencyToPlayer?.Invoke(currencyPlayer);
         }
     }
 
@@ -231,6 +235,12 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void IncreaseCurrency(int currencyGived)
     {
         currencyPlayer += currencyGived;
+    }
+
+    public void SaveActualCurrency()
+    {
+        PlayerPrefs.SetInt("CurrencyPlayer", currencyPlayer);
+        PlayerPrefs.Save();
     }
 
     public void IncreaseScore()

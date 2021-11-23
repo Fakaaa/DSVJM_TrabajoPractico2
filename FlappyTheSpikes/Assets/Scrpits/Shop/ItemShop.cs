@@ -30,6 +30,7 @@ public class ItemShop
     public string name;
     public SerializableColor hisColor;
     public int costToGet;
+    public int idInShop;
     public bool alreadyBought;
     public bool selected;
     #endregion
@@ -41,6 +42,7 @@ public class ItemShop
         alreadyBought = item.alreadyBought;
         selected = item.selected;
         name = item.name;
+        idInShop = item.idInShop;
     }
 }
 
