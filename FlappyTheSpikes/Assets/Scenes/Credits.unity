@@ -5342,6 +5342,7 @@ GameObject:
   - component: {fileID: 335760067}
   - component: {fileID: 335760070}
   - component: {fileID: 335760069}
+  - component: {fileID: 335760071}
   - component: {fileID: 335760068}
   m_Layer: 5
   m_Name: Back
@@ -5455,6 +5456,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &335760071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335760066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62ddfd0dbc8e66438df0c82ec331c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundHover: Hover
+  soundClick: Back
 --- !u!1 &363446139
 GameObject:
   m_ObjectHideFlags: 0
@@ -5862,7 +5877,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526035077}
   m_LocalRotation: {x: -0.16058438, y: -0.08440908, z: -0.013784849, w: 0.9833096}
-  m_LocalPosition: {x: 0, y: 0, z: 24}
+  m_LocalPosition: {x: 0, y: 0, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 921800733}
@@ -5870,7 +5885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -18.550001, y: -9.813001, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 142, y: -158}
+  m_AnchoredPosition: {x: 89, y: -158}
   m_SizeDelta: {x: 600, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &526035079
@@ -6123,6 +6138,7 @@ MonoBehaviour:
     picth: 1
     source: {fileID: 0}
     name: Gameplay
+    isMusic: 0
     loop: 1
 --- !u!4 &730561998
 Transform:
@@ -6321,11 +6337,16 @@ MonoBehaviour:
       - 1
       - 1
     costToGet: 0
+    idInShop: 0
     alreadyBought: 0
     selected: 0
+  postProccessGo: {fileID: 0}
+  googlePlayService: {fileID: 0}
   dificultyBehaviour: 8813000010270000983a0000a8610000
   gamePaused: 0
   clearItemsBuyed: 0
+  gmReference: {fileID: 0}
+  firstTimePostProscess: 0
   recordScore: 0
   colorsSaved: 0
   itemsSaved:
@@ -6377,6 +6398,7 @@ MonoBehaviour:
   defeatScreen: {fileID: 0}
   uiShop: {fileID: 0}
   lerperCamera: {fileID: 1550071218}
+  theConsole: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &833882703
 Transform:
@@ -6463,6 +6485,7 @@ MonoBehaviour:
   loaderCanvas: {fileID: 210263637}
   progressBar: {fileID: 1925390326}
   delayLoadFake: 2
+  waitForActivateScene: 0
 --- !u!4 &1096664472
 Transform:
   m_ObjectHideFlags: 0
@@ -7114,6 +7137,7 @@ GameObject:
   - component: {fileID: 1757791548}
   - component: {fileID: 1757791551}
   - component: {fileID: 1757791550}
+  - component: {fileID: 1757791552}
   - component: {fileID: 1757791549}
   m_Layer: 5
   m_Name: Quit
@@ -7227,6 +7251,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1757791552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757791547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62ddfd0dbc8e66438df0c82ec331c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundHover: Hover
+  soundClick: Click
 --- !u!1 &1802233080
 GameObject:
   m_ObjectHideFlags: 0
@@ -7388,7 +7426,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907257156}
   m_LocalRotation: {x: -0.14814152, y: -0.2502399, z: -0.022413775, w: 0.9565206}
-  m_LocalPosition: {x: 0, y: 0, z: 53}
+  m_LocalPosition: {x: 0, y: 0, z: 74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 921800733}
@@ -7396,7 +7434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -17.135, y: -29.604002, z: 1.8750001}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -153, y: -305}
+  m_AnchoredPosition: {x: -110, y: -296}
   m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1907257158
@@ -7443,11 +7481,13 @@ MonoBehaviour:
 
 
     Thanks
-    to
+    to:
 
     CYKO & That Witch Design
 
-    (AssetStore UI)'
+    (AssetStore UI)
+
+    Circlerun At OpenGameArt'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 50f6a6d074669b2438854c54d430624d, type: 2}
   m_sharedMaterial: {fileID: 4397276627568774719, guid: 50f6a6d074669b2438854c54d430624d,
