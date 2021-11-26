@@ -143,6 +143,7 @@ public class GManagerReference : MonoBehaviour
 
     public void ParseCommandLineOnConsole(string command)
     {
-        theConsole.ParseLineOnConsole(command);
+        if(theConsole != null)
+            theConsole.ParseLineOnConsole(command);
     }
 }

@@ -11,6 +11,7 @@ public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
     [SerializeField] private GameObject loaderCanvas;
     [SerializeField] private Image progressBar;
     [SerializeField] private float delayLoadFake;
+    [SerializeField] private int waitForActivateScene;
     private float target;
 
     void Start()
@@ -59,7 +60,7 @@ public class SceneLoader : MonoBehaviourSingleton<SceneLoader>
             target = loadOp.progress;
         } while (loadOp.progress < 0.9f);
 
-        await Task.Delay(1000);
+        await Task.Delay(waitForActivateScene);
 
         loadOp.allowSceneActivation = true;
         loaderCanvas.SetActive(false);

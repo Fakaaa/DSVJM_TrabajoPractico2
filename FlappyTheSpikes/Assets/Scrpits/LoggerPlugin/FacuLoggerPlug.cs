@@ -49,7 +49,7 @@ public class FacuLoggerPlug : MonoBehaviour
         if(elapsedTime >= 5)
         {
             elapsedTime -= 5;
-            Debug.Log("Tick: " + GetElapsedTime());
+            GameManager.Instance.gmReference.ParseCommandLineOnConsole("Tick: " + GetElapsedTime());
         }
     }
 
@@ -68,7 +68,7 @@ public class FacuLoggerPlug : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
             return FLoggerInstance.Call<double>("GetElapsedTime");
-        Debug.LogWarning("WrongPlatform!");
+        GameManager.Instance.gmReference.ParseCommandLineOnConsole("Trying access on method at WrongPlatform"+ gameObject.name);
         return 0;
     }
 
