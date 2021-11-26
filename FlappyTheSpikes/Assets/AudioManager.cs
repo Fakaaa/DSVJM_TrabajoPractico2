@@ -26,6 +26,9 @@ namespace AudioManagerScript
         }
 
         public Sound[] sounds;
+        private float masterVolumeMusic;
+        private float masterVolumeSound;
+
         void Start()
         {
             foreach (Sound s in sounds)
@@ -36,6 +39,52 @@ namespace AudioManagerScript
                 s.source.volume = s.volume;
                 s.source.pitch = s.picth;
                 s.source.loop = s.loop;
+            }
+        }
+
+        public float GetMasterVolumeMusic()
+        {
+            return masterVolumeMusic;
+        }
+
+        public float GetMasterVolumeSound()
+        {
+            return masterVolumeSound;
+        }
+
+        public void SetMasterVolMusic(float value)
+        {
+            masterVolumeMusic = value;
+
+            UpdateMasterVolumeMusic();
+        }
+
+        public void SetMasterVolSound(float value)
+        {
+            masterVolumeSound = value;
+
+            UpdateMasterVolumeSounds();
+        }
+
+        private void UpdateMasterVolumeMusic()
+        {
+            foreach (Sound s in sounds)
+            {
+                if(s.isMusic)
+                {
+                    s.source.volume = masterVolumeMusic;
+                }
+            }
+        }
+
+        private void UpdateMasterVolumeSounds()
+        {
+            foreach (Sound s in sounds)
+            {
+                if (!s.isMusic)
+                {
+                    s.source.volume = masterVolumeSound;
+                }
             }
         }
 

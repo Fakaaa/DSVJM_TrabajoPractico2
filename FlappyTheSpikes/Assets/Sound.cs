@@ -17,5 +17,7 @@ public class Sound
 
     public string name;
 
+    public bool isMusic;
+
     public bool loop;
 }

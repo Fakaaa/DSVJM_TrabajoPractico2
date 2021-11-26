@@ -15,6 +15,7 @@ public class GManagerReference : MonoBehaviour
     [SerializeField] public PanelAnimations defeatScreen;
     [SerializeField] public GameObject uiShop;
     [SerializeField] public CameraLerper lerperCamera;
+    public DebugConsole theConsole;
     public UnityAction OnGoShopMainMenu;
     public UnityAction OnExitShopMainMenu;
     #endregion
@@ -118,5 +119,30 @@ public class GManagerReference : MonoBehaviour
             ReferenceGM.ResumeGame();
             defeatScreen.ExcuteOpenAnimation();
         }
+    }
+
+    public void ChangeStateVibration()
+    {
+        ReferenceGM.ChangeStateVibration();
+    }
+
+    public void ChangeStatePostProcces()
+    {
+        ReferenceGM.ChangeStatePostProcces();
+    }
+
+    public void OpenLeaderboards()
+    {
+        ReferenceGM.OpenLeaderboards();
+    }
+
+    public void OpenAchievements()
+    {
+        ReferenceGM.OpenAchievements();
+    }
+
+    public void ParseCommandLineOnConsole(string command)
+    {
+        theConsole.ParseLineOnConsole(command);
     }
 }

@@ -12,11 +12,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField] public int valuePassWall;
     [SerializeField] public int currencyPlayer;
     [SerializeField] public ItemShop colorPlayerSelected;
+    [SerializeField] public GameObject postProccessGo;
+    [SerializeField] PlayGames googlePlayService;
+
     [SerializeField, Tooltip("The first on array will always be easy mode, while the last one hard mode")]
     public int [] dificultyBehaviour;
     public bool gamePaused;
     [Tooltip("Enable this on executemode to clear the saved items on quit.")]
     public bool clearItemsBuyed;
+    public GManagerReference gmReference;
+    [HideInInspector] public bool firstTimePostProscess = false;
 
     [Header("SAVE&LOAD INFORMATION")]
     [Space(15)]
@@ -33,10 +38,13 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public UnityAction OnChangeDificulty;
     public UnityAction<int> OnGiveCurrencyToPlayer;
     public UnityAction<TMPro.TextMeshProUGUI, float, float> OnGainPoints;
+    public UnityAction OnVibrationChangeState;
+
+    public UnityAction OnPostProccesOn;
+    public UnityAction OnPostProccesOff;
     #endregion
 
     #region PRIVATE_FIELDS
-    GManagerReference gmReference;
     GameObject initialPlatform;
     UI_PopTexts uiPOPTexts;
     bool initialPlatformActive = true;
@@ -50,6 +58,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     }
     private Dificulty actualDificulty = Dificulty.Easy;
     private Dificulty lastDificulty;
+
     #endregion
 
     private void Start()
@@ -115,6 +124,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         }
         else if(scorePlayer > dificultyBehaviour[0] && scorePlayer <= dificultyBehaviour[1])
         {
+            if(googlePlayService != null)
+            {
+                googlePlayService.UnlockAchievement("GettingStarted");
+            }
+
             actualDificulty = Dificulty.Medium;
         }
         else if(scorePlayer > dificultyBehaviour[1] && scorePlayer <= dificultyBehaviour[2])
@@ -262,6 +276,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void SaveNewRecordScore(int val)
     {
         recordScore = val;
+        if(googlePlayService != null)
+        {
+            googlePlayService.AddScoreToLeaderboard();
+        }
         PlayerPrefs.SetInt("RecordScore", recordScore);
         PlayerPrefs.Save();
     }
@@ -296,4 +314,38 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         OnQuitGame?.Invoke();
     }
 
+    public void ChangeStateVibration()
+    {
+        OnVibrationChangeState?.Invoke();
+        Vibrator.Instance.SwitchVibratorState();
+    }
+
+    public void ChangeStatePostProcces()
+    {
+        postProccessGo.SetActive(!postProccessGo.activeSelf);
+
+        if (postProccessGo.activeSelf)
+            OnPostProccesOff?.Invoke();
+        else
+            OnPostProccesOn?.Invoke();
+
+        if(!firstTimePostProscess)
+            firstTimePostProscess = true;
+    }
+
+    public void OpenLeaderboards()
+    {
+        if (googlePlayService == null)
+            return;
+
+        googlePlayService.ShowLeaderboard();
+    }
+
+    public void OpenAchievements()
+    {
+        if (googlePlayService == null)
+            return;
+
+        googlePlayService.ShowAchievements();
+    }
 }

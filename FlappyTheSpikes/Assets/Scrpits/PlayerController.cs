@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0) && t > timeToTap)
         {
+            Vibrator.Instance?.MakeVibe();
             MakeJump();
             t = 0;
         }
