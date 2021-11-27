@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField] public ItemShop colorPlayerSelected;
     [SerializeField] public GameObject postProccessGo;
     [SerializeField] PlayGames googlePlayService;
+    [SerializeField] FacuLoggerPlug nativePlugin;
 
     [SerializeField, Tooltip("The first on array will always be easy mode, while the last one hard mode")]
+    [Space(20)]
     public int [] dificultyBehaviour;
     public bool gamePaused;
     [Tooltip("Enable this on executemode to clear the saved items on quit.")]
@@ -69,6 +71,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         OnResetGameplay += ResetScore;
 
+        if (nativePlugin != null)
+        {
+            //recordScore = nativePlugin.GetSavedScore();
+            //gmReference.ParseCommandLineOnConsole("Score loaded from plugin: " + recordScore);
+        }
         recordScore = PlayerPrefs.GetInt("RecordScore", 0);
 
         TriggerScore.playerPassWall?.Invoke(scorePlayer,recordScore);
@@ -81,6 +88,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         InitializeEsentials();
 
+        if (nativePlugin != null)
+        {
+            //recordScore = nativePlugin.GetSavedScore();
+            //gmReference.ParseCommandLineOnConsole("Score loaded from plugin: " + recordScore);
+        }
         recordScore = PlayerPrefs.GetInt("RecordScore", 0);
 
         TriggerScore.playerPassWall?.Invoke(scorePlayer, recordScore);
@@ -280,6 +292,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             googlePlayService.AddScoreToLeaderboard();
         }
+        if(nativePlugin != null)
+        {
+            //nativePlugin.SaveRecordScore(recordScore);
+        }
         PlayerPrefs.SetInt("RecordScore", recordScore);
         PlayerPrefs.Save();
     }
@@ -348,4 +364,5 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         googlePlayService.ShowAchievements();
     }
+
 }
