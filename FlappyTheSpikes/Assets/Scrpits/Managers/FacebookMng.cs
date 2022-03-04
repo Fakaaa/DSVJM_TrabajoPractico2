@@ -37,7 +37,7 @@ public class FacebookMng : MonoBehaviour
     public void LoginFacebook()
     {
         var permissions = new List<string>() { "public_profile", "email", "user_friends" };
-        FB.LogInWithPublishPermissions(permissions);
+        FB.LogInWithReadPermissions(permissions);
     }
     public void LogOut()
     {
