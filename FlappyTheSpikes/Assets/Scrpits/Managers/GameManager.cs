@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     [SerializeField] public GameObject postProccessGo;
     [SerializeField] PlayGames googlePlayService;
     [SerializeField] FacuLoggerPlug nativePlugin;
+    [SerializeField] FacebookMng facebookManager;
 
     [SerializeField, Tooltip("The first on array will always be easy mode, while the last one hard mode")]
     [Space(20)]
@@ -63,6 +64,16 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
     #endregion
 
+    #region PROPERTIES
+    public FacebookMng Facebook
+    {
+        get
+        {
+            return facebookManager;
+        }
+    }
+    #endregion
+
     private void Start()
     {
         InitializeEsentials();
@@ -71,11 +82,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
 
         OnResetGameplay += ResetScore;
 
-        if (nativePlugin != null)
+        /*if (nativePlugin != null)
         {
-            //recordScore = nativePlugin.GetSavedScore();
-            //gmReference.ParseCommandLineOnConsole("Score loaded from plugin: " + recordScore);
-        }
+            recordScore = nativePlugin.GetSavedScore();
+            gmReference.ParseCommandLineOnConsole("Score loaded from plugin: " + recordScore);
+        }*/
         recordScore = PlayerPrefs.GetInt("RecordScore", 0);
 
         TriggerScore.playerPassWall?.Invoke(scorePlayer,recordScore);
@@ -88,11 +99,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         InitializeEsentials();
 
-        if (nativePlugin != null)
+        /*if (nativePlugin != null)
         {
-            //recordScore = nativePlugin.GetSavedScore();
-            //gmReference.ParseCommandLineOnConsole("Score loaded from plugin: " + recordScore);
-        }
+            recordScore = nativePlugin.GetSavedScore();
+            gmReference.ParseCommandLineOnConsole("Score loaded from plugin: " + recordScore);
+        }*/
         recordScore = PlayerPrefs.GetInt("RecordScore", 0);
 
         TriggerScore.playerPassWall?.Invoke(scorePlayer, recordScore);
@@ -292,10 +303,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             googlePlayService.AddScoreToLeaderboard();
         }
-        if(nativePlugin != null)
+        /*if(nativePlugin != null)
         {
-            //nativePlugin.SaveRecordScore(recordScore);
-        }
+            nativePlugin.SaveRecordScore(recordScore);
+        }*/
         PlayerPrefs.SetInt("RecordScore", recordScore);
         PlayerPrefs.Save();
     }

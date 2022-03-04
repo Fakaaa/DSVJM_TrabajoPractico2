@@ -40,7 +40,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("File not found at " + path);
+            Debug.LogWarning("File not found at " + path);
             return null;
         }
     }

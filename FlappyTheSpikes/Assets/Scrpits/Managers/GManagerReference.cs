@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class GManagerReference : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GManagerReference : MonoBehaviour
     [SerializeField] public PanelAnimations defeatScreen;
     [SerializeField] public GameObject uiShop;
     [SerializeField] public CameraLerper lerperCamera;
+    [SerializeField] public FacebookMng fbManager;
     public DebugConsole theConsole;
     public UnityAction OnGoShopMainMenu;
     public UnityAction OnExitShopMainMenu;
@@ -23,6 +25,7 @@ public class GManagerReference : MonoBehaviour
     #region PRIVATE_FIELDS
     [HideInInspector] public Player player;
     #endregion
+
     public bool GmRefInitialized
     {
         get; set;
@@ -31,6 +34,7 @@ public class GManagerReference : MonoBehaviour
     public void InitGMReference(GameManager gameManager)
     {
         reference = gameManager;
+        fbManager = gameManager.Facebook;
         GmRefInitialized = true;
 
         if(lerperCamera != null)
@@ -140,6 +144,33 @@ public class GManagerReference : MonoBehaviour
     {
         ReferenceGM.OpenAchievements();
     }
+
+    #region FACEBOOK
+    public void FacebookLogin()
+    {
+        fbManager.LoginFacebook();
+    }
+
+    public void FacebookLogout()
+    {
+        fbManager.LogOut();
+    }
+
+    public void FacebookShare()
+    {
+        fbManager.Share();
+    }
+
+    public void FacebookGameRequest()
+    {
+        fbManager.FacebookGameRequest();
+    }
+
+    public void FacebookOpenFeed()
+    {
+        fbManager.FeedFacebook();
+    }
+    #endregion
 
     public void ParseCommandLineOnConsole(string command)
     {
