@@ -6,6 +6,10 @@ using Facebook.Unity;
 
 public class FacebookMng : MonoBehaviour
 {
+    #region PRIVATE_FIELDS
+    private string fbLogingState = string.Empty;
+    #endregion
+
     #region PRIVATE_METHODS
     private void Awake()
     {
@@ -31,6 +35,21 @@ public class FacebookMng : MonoBehaviour
             FB.ActivateApp();
         }
     }
+
+    private void Update()
+    {
+        if(FB.IsInitialized)
+        {
+            if(FB.IsLoggedIn)
+            {
+                fbLogingState = "Loged in!";
+            }
+            else
+            {
+                fbLogingState = "Loged out";
+            }
+        }
+    }
     #endregion
 
     #region EXPOSED_METHODS
@@ -45,19 +64,23 @@ public class FacebookMng : MonoBehaviour
     }
     public void Share()
     {
-        FB.ShareLink(new System.Uri("https://www.youtube.com"), "See a lot of videos for free!",
-            "Here are for example a lot of math videos!",new System.Uri("https://www.youtube.com/user/julioprofe"));
+        FB.ShareLink(new System.Uri("https://fakaa.itch.io"), "See my other games!",
+            "Here are for example a chess game made it with raylib!",new System.Uri("https://fakaa.itch.io/chess-time"));
     }
     public void FeedFacebook()
     {
         if (FB.IsLoggedIn)
         {
-            FB.LogInWithPublishPermissions();
+            FB.FeedShare();
         }
     }
     public void FacebookGameRequest()
     {
-        FB.AppRequest("Come plaay with me this awesome game! Is not like the averge flappy games!");
+        FB.AppRequest("Come play with me this awesome game! Is not like the averge flappy games!");
+    }
+    public string GetLogedState()
+    {
+        return fbLogingState;
     }
     #endregion
 }

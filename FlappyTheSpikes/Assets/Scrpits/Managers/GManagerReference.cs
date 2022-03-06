@@ -2,6 +2,8 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+using TMPro;
+
 public class GManagerReference : MonoBehaviour
 {
     private GameManager reference;
@@ -13,10 +15,11 @@ public class GManagerReference : MonoBehaviour
         }
     }
     #region EXPOSED_FIELDS
-    [SerializeField] public PanelAnimations defeatScreen;
-    [SerializeField] public GameObject uiShop;
-    [SerializeField] public CameraLerper lerperCamera;
-    [SerializeField] public FacebookMng fbManager;
+    [SerializeField] PanelAnimations defeatScreen;
+    [SerializeField] GameObject uiShop;
+    [SerializeField] CameraLerper lerperCamera;
+    [SerializeField] FacebookMng fbManager;
+    [SerializeField] TextMeshProUGUI logedText;
     public DebugConsole theConsole;
     public UnityAction OnGoShopMainMenu;
     public UnityAction OnExitShopMainMenu;
@@ -149,26 +152,36 @@ public class GManagerReference : MonoBehaviour
     public void FacebookLogin()
     {
         fbManager.LoginFacebook();
+        UpdateTextLoged();
     }
 
     public void FacebookLogout()
     {
-        fbManager.LogOut();
+        fbManager.LogOut(); 
+        UpdateTextLoged();
     }
 
     public void FacebookShare()
     {
         fbManager.Share();
+        UpdateTextLoged();
     }
 
     public void FacebookGameRequest()
     {
         fbManager.FacebookGameRequest();
+        UpdateTextLoged();
     }
 
     public void FacebookOpenFeed()
     {
         fbManager.FeedFacebook();
+        UpdateTextLoged();
+    }
+
+    public void UpdateTextLoged()
+    {
+        logedText.text = fbManager.GetLogedState();
     }
     #endregion
 
